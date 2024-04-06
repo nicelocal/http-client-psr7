@@ -62,7 +62,7 @@ final class PsrMessageStream implements StreamInterface
         return $this->buffer;
     }
 
-    public function getMetadata($key = null)
+    public function getMetadata($key = null): ?array
     {
         return $key === null ? [] : null;
     }

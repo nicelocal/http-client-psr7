@@ -22,7 +22,7 @@ class PsrAdapterTest extends TestCase
 {
     public function testFromPsrRequestReturnsRequestWithEqualUri(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new PsrRequest('https://user:password@localhost/foo?a=b#c');
         $target = $adapter->fromPsrRequest($source);
@@ -32,7 +32,7 @@ class PsrAdapterTest extends TestCase
 
     public function testFromPsrRequestReturnsRequestWithEqualMethod(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new PsrRequest(null, 'POST');
         $target = $adapter->fromPsrRequest($source);
@@ -41,7 +41,7 @@ class PsrAdapterTest extends TestCase
 
     public function testFromPsrRequestReturnsRequestWithAllAddedHeaders(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new PsrRequest(null, null, 'php://memory', ['a' => 'b', 'c' => ['d', 'e']]);
         $target = $adapter->fromPsrRequest($source);
@@ -52,7 +52,7 @@ class PsrAdapterTest extends TestCase
 
     public function testFromPsrRequestReturnsRequestWithSameProtocolVersion(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = (new PsrRequest())->withProtocolVersion('2');
         $target = $adapter->fromPsrRequest($source);
@@ -62,7 +62,7 @@ class PsrAdapterTest extends TestCase
 
     public function testFromPsrRequestReturnsRequestWithMatchingBody(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new PsrRequest();
         $source->getBody()->write('body_content');
@@ -73,7 +73,7 @@ class PsrAdapterTest extends TestCase
 
     public function testToPsrRequestReturnsRequestWithEqualUri(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new Request('https://user:password@localhost/foo?a=b#c');
 
@@ -84,7 +84,7 @@ class PsrAdapterTest extends TestCase
 
     public function testToPsrRequestReturnsRequestWithEqualMethod(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new Request('', 'POST');
 
@@ -95,7 +95,7 @@ class PsrAdapterTest extends TestCase
 
     public function testToPsrRequestReturnsRequestWithAllAddedHeaders(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new Request('');
         $source->setHeaders(['a' => 'b', 'c' => ['d', 'e']]);
@@ -115,7 +115,7 @@ class PsrAdapterTest extends TestCase
         ?string $selectedVersion,
         string $targetVersion
     ): void {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new Request('');
         $source->setProtocolVersions($sourceVersions);
@@ -136,7 +136,7 @@ class PsrAdapterTest extends TestCase
 
     public function testToPsrRequestThrowsExceptionIfProvidedVersionNotInSource(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new Request('');
         $source->setProtocolVersions(['2']);
@@ -149,7 +149,7 @@ class PsrAdapterTest extends TestCase
 
     public function testToPsrRequestThrowsExceptionIfDefaultVersionNotInSource(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new Request('');
         $source->setProtocolVersions(['1.0', '2']);
@@ -162,7 +162,7 @@ class PsrAdapterTest extends TestCase
 
     public function testToPsrResponseReturnsResponseWithEqualProtocolVersion(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new Response(
             '2',
@@ -180,7 +180,7 @@ class PsrAdapterTest extends TestCase
 
     public function testToPsrResponseReturnsResponseWithEqualStatusCode(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new Response(
             '1.1',
@@ -198,7 +198,7 @@ class PsrAdapterTest extends TestCase
 
     public function testToPsrResponseReturnsResponseWithEqualReason(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new Response(
             '1.1',
@@ -216,7 +216,7 @@ class PsrAdapterTest extends TestCase
 
     public function testToPsrResponseReturnsResponseWithEqualHeaders(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new Response(
             '1.1',
@@ -234,7 +234,7 @@ class PsrAdapterTest extends TestCase
 
     public function testToPsrResponseReturnsResponseWithEqualBody(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new Response(
             '1.1',
@@ -252,7 +252,7 @@ class PsrAdapterTest extends TestCase
 
     public function testFromPsrResponseWithRequestReturnsResultWithSameRequest(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new PsrResponse();
 
@@ -265,7 +265,7 @@ class PsrAdapterTest extends TestCase
 
     public function testFromPsrResponseWithoutPreviousResponseReturnsResponseWithoutPreviousResponse(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new PsrResponse();
 
@@ -278,7 +278,7 @@ class PsrAdapterTest extends TestCase
 
     public function testFromPsrResponseWithPreviousResponseReturnsResponseWithSamePreviousResponse(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $previousResponse = new Response(
             '1.1',
@@ -298,7 +298,7 @@ class PsrAdapterTest extends TestCase
 
     public function testFromPsrResponseReturnsResultWithEqualProtocolVersion(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = (new PsrResponse())->withProtocolVersion('2');
 
@@ -309,7 +309,7 @@ class PsrAdapterTest extends TestCase
 
     public function testFromPsrResponseReturnsResultWithEqualStatus(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = (new PsrResponse())->withStatus(HttpStatus::NOT_FOUND);
 
@@ -320,7 +320,7 @@ class PsrAdapterTest extends TestCase
 
     public function testFromPsrResponseReturnsResultWithEqualHeaders(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new PsrResponse(
             'php://memory',
@@ -335,7 +335,7 @@ class PsrAdapterTest extends TestCase
 
     public function testFromPsrResponseReturnsResultWithEqualBody(): void
     {
-        $adapter = new PsrAdapter(new RequestFactory, new ResponseFactory);
+        $adapter = new PsrAdapter(new RequestFactory(), new ResponseFactory());
 
         $source = new PsrResponse();
         $source->getBody()->write('body_content');

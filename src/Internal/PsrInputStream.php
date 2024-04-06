@@ -15,22 +15,18 @@ use Psr\Http\Message\StreamInterface;
 final class PsrInputStream implements ReadableStream, \IteratorAggregate
 {
     use ReadableStreamIteratorAggregate;
+
     public const DEFAULT_CHUNK_SIZE = 8192;
-
-    private StreamInterface $stream;
-
-    private int $chunkSize;
 
     private bool $tryRewind = true;
 
-    public function __construct(StreamInterface $stream, int $chunkSize = self::DEFAULT_CHUNK_SIZE)
-    {
-        if ($chunkSize < 1) {
-            throw new \Error("Invalid chunk size: {$chunkSize}");
+    public function __construct(
+        private readonly StreamInterface $stream,
+        private readonly int $chunkSize = self::DEFAULT_CHUNK_SIZE,
+    ) {
+        if ($this->chunkSize < 1) {
+            throw new \Error("Invalid chunk size: {$this->chunkSize}");
         }
-
-        $this->stream = $stream;
-        $this->chunkSize = $chunkSize;
     }
 
     public function onClose(\Closure $onClose): never

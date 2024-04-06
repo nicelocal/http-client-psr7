@@ -16,13 +16,10 @@ use Psr\Http\Message\StreamInterface;
 
 final class PsrAdapter
 {
-    private PsrRequestFactory $requestFactory;
-    private PsrResponseFactory $responseFactory;
-
-    public function __construct(PsrRequestFactory $requestFactory, PsrResponseFactory $responseFactory)
-    {
-        $this->requestFactory = $requestFactory;
-        $this->responseFactory = $responseFactory;
+    public function __construct(
+        private readonly PsrRequestFactory $requestFactory,
+        private readonly PsrResponseFactory $responseFactory,
+    ) {
     }
 
     public function fromPsrRequest(PsrRequest $source): Request

@@ -10,13 +10,8 @@ use Psr\Http\Message\ResponseInterface as PsrResponse;
 
 final class PsrHttpClient implements ClientInterface
 {
-    private HttpClient $httpClient;
-    private PsrAdapter $psrAdapter;
-
-    public function __construct(HttpClient $client, PsrAdapter $psrAdapter)
+    public function __construct(private readonly HttpClient $httpClient, private readonly PsrAdapter $psrAdapter)
     {
-        $this->httpClient = $client;
-        $this->psrAdapter = $psrAdapter;
     }
 
     public function sendRequest(PsrRequest $request, ?Cancellation $cancellation = null): PsrResponse

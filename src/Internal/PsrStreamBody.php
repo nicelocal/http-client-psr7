@@ -11,11 +11,8 @@ use Psr\Http\Message\StreamInterface;
  */
 final class PsrStreamBody implements HttpContent
 {
-    private StreamInterface $stream;
-
-    public function __construct(StreamInterface $stream)
+    public function __construct(private readonly StreamInterface $stream)
     {
-        $this->stream = $stream;
     }
 
     public function getContent(): ReadableStream
