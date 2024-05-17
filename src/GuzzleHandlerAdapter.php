@@ -213,6 +213,10 @@ final class GuzzleHandlerAdapter
 
         $uri = new GuzzleUri($proxy);
 
+        if ($uri->getAuthority() !== '') {
+            $request->addHeader('Proxy-Authorization', 'Basic '.\base64_encode($uri->getAuthority()));
+        }
+
         return match ($uri->getScheme()) {
             'http' => new Http1TunnelConnector($uri->getHost() . ':' . $uri->getPort()),
             'https' => new Https1TunnelConnector(
