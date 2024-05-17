@@ -26,6 +26,7 @@ use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use GuzzleHttp\Psr7\Uri as GuzzleUri;
 use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Utils;
+use League\Uri\Uri;
 use Psr\Http\Message\RequestFactoryInterface as PsrRequestFactory;
 use Psr\Http\Message\RequestInterface as PsrRequest;
 use Psr\Http\Message\ResponseFactoryInterface as PsrResponseFactory;
@@ -211,7 +212,7 @@ final class GuzzleHandlerAdapter
             return null;
         }
 
-        $uri = new GuzzleUri($proxy);
+        $uri = Uri::fromBaseUri($proxy);
 
         $headers = [];
         $user = null;
