@@ -216,9 +216,9 @@ final class GuzzleHandlerAdapter
         $headers = [];
         $user = null;
         $password = null;
-        if ($uri->getAuthority() !== '') {
-            $headers = ['Proxy-Authorization' => 'Basic '.\base64_encode($uri->getAuthority())];
-            [$user, $password] = explode(':', $uri->getAuthority(), 2) + [null, null];
+        if ($uri->getUserInfo() !== '') {
+            $headers = ['Proxy-Authorization' => 'Basic '.\base64_encode($uri->getUserInfo())];
+            [$user, $password] = explode(':', $uri->getUserInfo(), 2) + [null, null];
         }
 
         return match ($uri->getScheme()) {
