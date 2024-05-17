@@ -229,14 +229,14 @@ final class GuzzleHandlerAdapter
             $headers = ['Proxy-Authorization' => 'Basic '.\base64_encode($userInfo)];
         }
 
-        return match ($uri->getScheme()) {
+        return match ($scheme) {
             'http' => new Http1TunnelConnector($uri->getHost() . ':' . $uri->getPort(), $headers),
             'https' => new Https1TunnelConnector(
                 $uri->getHost() . ':' . $uri->getPort(),
                 new ClientTlsContext($uri->getHost()),
                 $headers
             ),
-            default => throw new \ValueError('Unsupported protocol in proxy option: ' . $uri->getScheme()),
+            default => throw new \ValueError('Unsupported protocol in proxy option: ' . $scheme),
         };
     }
 
